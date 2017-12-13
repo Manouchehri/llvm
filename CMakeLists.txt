@@ -110,9 +110,11 @@ else() # Linux
 		# http://www.cmake.org/pipermail/cmake/2010-October/040109.html)
 		#
 		# This does not work on MSVC when using a project/solution.
-		BUILD_COMMAND "$(MAKE)"
-			COMMAND "$(MAKE)" llvm-as
-			COMMAND "$(MAKE)" llvm-dis
+		if(CMAKE_GENERATOR MATCHES "Make")
+			BUILD_COMMAND "$(MAKE)"
+				COMMAND "$(MAKE)" llvm-as
+				COMMAND "$(MAKE)" llvm-dis
+		endif()
 
 		# Disable the installation right after build (we want to install the needed
 		# tools manually when calling `make.sh install`).
